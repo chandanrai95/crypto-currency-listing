@@ -16,7 +16,7 @@ export function formatPrice(value: number, currency: string = 'USD') {
   return `${formattedValue} ${currency}`;
 }
 
-export function formatDate(dateStr: string | undefined) {
+export function formatDate(dateStr: string) {
   try {
     const opt: Intl.DateTimeFormatOptions = {
       year: 'numeric',
