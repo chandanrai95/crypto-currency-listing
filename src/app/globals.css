@@ -24,7 +24,7 @@ body {
   display: flex;
   width: 100vw;
   height: 100vh;
-  background: var(--background);
+  background: #232730;
   color: black;
   font-family: Arial, Helvetica, sans-serif;
 }
