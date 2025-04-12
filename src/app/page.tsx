@@ -28,7 +28,7 @@ export default function Home() {
   const [cryptoList, setCryptoList] = useState([]);
 
   /* This is use for setting the selected crypto data */
-  const [modalData, setModalData] = useState<Object | undefined>();
+  const [modalData, setModalData] = useState<{ [key: string]: string | number | undefined; image: string } | undefined>();
 
   /* This is use for determining if modal is open or not */
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -128,7 +128,7 @@ export default function Home() {
 
 
   // Handler for opening modal
-  const onModalOpenClick = (data: Object) => {
+  const onModalOpenClick = (data: { [key: string]: string | number | undefined; image: string }) => {
     setIsModalOpen(true);
     setModalData(data)
   }
