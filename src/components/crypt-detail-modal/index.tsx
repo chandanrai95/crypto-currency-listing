@@ -44,7 +44,7 @@ const attributesList = [
     isNumber: true
   }, {
     label: 'Lowest Price In 24 hours',
-    key: 'high_24h',
+    key: 'low_24h',
     isNumber: true
   }, , {
     label: 'Last Updated At',
