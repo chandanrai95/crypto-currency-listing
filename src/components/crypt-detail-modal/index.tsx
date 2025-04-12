@@ -11,46 +11,46 @@ const textRightClassName = 'flex-1 text-md text-center p-2 border-gray-300'
 interface CryptoDetailModalProps {
   isOpen: boolean,
   onClose?: MouseEventHandler<HTMLButtonElement>,
-  data?: { [key: string]: string | number | undefined, image: string }
+  data?: Record<string, any>,
   currency?: string
 }
 
 const attributesList = [
-//   {
-//   label: 'Name',
-//   key: 'name',
-// }, 
-{
-  label: 'Market Cap Rank',
-  key: 'market_cap_rank'
-}, {
-  label: 'Market Cap',
-  key: 'market_cap',
-  isNumber: true
-}, {
-  label: 'Market Cap Change In 24 Hours',
-  key: 'market_cap_change_24h',
-}, {
-  label: 'Current Price',
-  key: 'current_price',
-  isNumber: true
-}, {
-  label: 'Price Change In 24 hours',
-  key: 'price_change_24h',
-  isNumber: true
-}, {
-  label: 'Highest Price In 24 hours',
-  key: 'high_24h',
-  isNumber: true
-}, {
-  label: 'Lowest Price In 24 hours',
-  key: 'high_24h',
-  isNumber: true
-}, , {
-  label: 'Last Updated At',
-  key: 'last_updated',
-  formatter: (str: string | number | undefined) => formatDate(String(str))
-}]
+  //   {
+  //   label: 'Name',
+  //   key: 'name',
+  // }, 
+  {
+    label: 'Market Cap Rank',
+    key: 'market_cap_rank'
+  }, {
+    label: 'Market Cap',
+    key: 'market_cap',
+    isNumber: true
+  }, {
+    label: 'Market Cap Change In 24 Hours',
+    key: 'market_cap_change_24h',
+  }, {
+    label: 'Current Price',
+    key: 'current_price',
+    isNumber: true
+  }, {
+    label: 'Price Change In 24 hours',
+    key: 'price_change_24h',
+    isNumber: true
+  }, {
+    label: 'Highest Price In 24 hours',
+    key: 'high_24h',
+    isNumber: true
+  }, {
+    label: 'Lowest Price In 24 hours',
+    key: 'high_24h',
+    isNumber: true
+  }, , {
+    label: 'Last Updated At',
+    key: 'last_updated',
+    formatter: (str: string | number | undefined) => formatDate(String(str))
+  }]
 
 
 const CryptoDetailModal = ({
