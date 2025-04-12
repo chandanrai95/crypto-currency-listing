@@ -33,6 +33,9 @@ export default function Home() {
   /* This is use for determining if modal is open or not */
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  /* This is use for determining we want to show loader or content */
+  const [isLoading, setIsLoading] = useState(false);
+
   /* This is use for selecting sort by and sort order */
   const [filter, setFilter] = useState({
     attr: 'market_cap',
@@ -42,12 +45,15 @@ export default function Home() {
   /*Fetches top 50 crypto currency list from coingecko api on basis of selected currency and set to state  */
   const fetchAndSetupCryptoData = async (currency: string = 'usd') => {
     try {
+      setIsLoading(true);
       const order = `${filter.attr}_${filter.order}`
       const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=50&page=1&sparkline=false`
       const res = await fetch(url);
       const data = await res.json();
       setCryptoList(data);
+      setIsLoading(false);
     } catch (err) {
+      setIsLoading(false);
       console.error('fetchAndSetupCryptoData. error', err);
       setCryptoList([]);
       window.alert('Unable to load cryptocurrency list!')
@@ -275,7 +281,7 @@ export default function Home() {
     <div className="flex flex-1 h-full items-center p-10 flex-col">
       <h1
         className=" font-bold text-2xl text-white"
-      >Cryptocurry Listing
+      >Top 50 Cryptocurreny Listing
       </h1>
       <div
         className="flex mt-10 flex-1 flex-col bg-white w-full p-5 shadow-xl rounded-md h-full overflow-auto"
@@ -307,15 +313,21 @@ export default function Home() {
             {orderList}
           </div>
         </div>
-        
+
         <div
           className="flex-1 mt-5 max-h-full overflow-auto h-full "
         >
-          <Table
-            columns={columns}
-            data={filteredCrypto}
-            onRowClick={onRowSelect}
-          />
+          {
+            isLoading && (
+              <div className="w-full text-center">loading ...</div>
+            ) || (
+              <Table
+                columns={columns}
+                data={filteredCrypto}
+                onRowClick={onRowSelect}
+              />)
+          }
+
         </div>
         <div
           className="flex  w-full justify-end mt-5"

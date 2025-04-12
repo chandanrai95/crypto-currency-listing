@@ -76,6 +76,7 @@ const RecentCrypto = () => {
 
   const formatedData = useMemo(() => {
     return cryptos.map((el: { meta_data: Object }) => el.meta_data);
+    // return []
   }, [cryptos])
 
   return (
@@ -90,11 +91,22 @@ const RecentCrypto = () => {
         <div
           className="flex-1 mt-10 max-h-full overflow-auto h-full "
         >
-          <Table
-            columns={columns}
-            data={formatedData}
-            onRowClick={onRowSelect}
-          />
+          {
+            loading && (
+              <div className="w-full text-center">loading ...</div>
+            ) || (
+              (formatedData || []).length == 0 && (
+                <div className="w-full text-center">Content is not available</div>
+              ) || (
+                <Table
+                  columns={columns}
+                  data={formatedData}
+                  onRowClick={onRowSelect}
+                />
+              )
+            )
+          }
+
         </div>
       </div>
     </div>
