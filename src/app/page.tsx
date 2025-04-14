@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Table from '@/components/table';
 import CryptoDetailModal from "@/components/crypt-detail-modal";
-import { formatDate, formatPrice } from '@/utils';
+import { formatCurrency, formatDate, formatPrice, getTableColumns } from '@/utils';
 import { postCryptoViewed } from '@/api/viewed-crypto'
 import Link from "next/link";
 
@@ -123,8 +123,8 @@ export default function Home() {
         onChange={onChangeCurrency}
       >
         {
-          cList.map((__c) => {
-            return <option key={__c.code} value={__c.code}>{__c.name}</option>
+          cList.map((__c, idx) => {
+            return <option key={`${__c.code}_${idx}`} value={__c.code}>{__c.name}</option>
           })
         }
 
@@ -147,43 +147,7 @@ export default function Home() {
 
   // Calculates and create columns list for table
   const columns = useMemo(() => {
-
-    return [{
-      header: 'Logo',
-      headerKey: 'image',
-      customComponet: (val: string) => {
-        return (
-          <img
-            className="h-[32rem"
-            style={{
-              height: '60px',
-              width: '60px'
-            }}
-            src={val}
-
-          />
-        )
-      }
-    }, {
-      header: 'Name',
-      headerKey: 'name'
-    }, {
-      header: 'Market Cap Rank',
-      headerKey: 'market_cap_rank',
-
-    }, {
-      header: 'Market Cap',
-      headerKey: 'market_cap',
-      formatter: (val: number) => formatPrice(val, currency)
-    }, {
-      header: 'Price',
-      headerKey: 'current_price',
-      formatter: (val: number) => formatPrice(val, currency)
-    }, {
-      header: 'Last Updated',
-      headerKey: 'last_updated',
-      formatter: (val: string) => formatDate(val)
-    }]
+    return getTableColumns({ currency })
   }, [currency]);
 
 
@@ -206,7 +170,7 @@ export default function Home() {
       >
         {
           columns.map((__c) => {
-            return <option key={__c.headerKey} value={__c.headerKey}>{__c.header}</option>
+            return <option key={__c.headerKey || __c.header} value={__c.headerKey}>{__c.header}</option>
           })
         }
 
@@ -343,6 +307,7 @@ export default function Home() {
         isOpen={isModalOpen}
         onClose={onModalClose}
         data={modalData}
+        currency={currency}
       />
     </div>
   );
