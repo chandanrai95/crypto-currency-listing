@@ -96,24 +96,27 @@ const attributesList = [
       let formatedCirculatingS = formatPrice(circulating_supply, symbol).toUpperCase();
       return (
         <div className={textRightClassName}>
-          <div
-            className="w-[200px] rounded-xl h-[20px] bg-[rgba(0,0,0,0.5)] relative group inline-block cursor-pointer"
-          >
+          
             <div
-              className={`rounded-xl h-full bg-black `}
-              style={{
-                width: `${perc}%`
-              }}
+              className="w-[200px] rounded-xl h-[20px] bg-[rgba(0,0,0,0.5)] relative group inline-block cursor-pointer"
             >
+              <div
+                className={`rounded-xl h-full bg-black `}
+                style={{
+                  width: `${perc}%`
+                }}
+              >
+              </div>
+
+              <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 
+              opacity-0 group-hover:opacity-100 
+              transition bg-gray-800 text-white text-sm 
+              px-3 py-1 rounded pointer-events-none z-10 whitespace-nowrap">
+                <span>Total : {formatedTotalS}</span> <br />
+                <span>Circulating : {formatedCirculatingS}</span>
+              </div>
             </div>
-            <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 
-                opacity-0 group-hover:opacity-100 
-                transition bg-gray-800 text-white text-sm 
-                px-3 py-1 rounded pointer-events-none z-10 whitespace-nowrap">
-              <span>Total : {formatedTotalS}</span> <br />
-              <span>Circulating : {formatedCirculatingS}</span>
-            </div>
-          </div>
+            <span className="ml-1">{`${perc}%`}</span>
         </div>
       )
     }

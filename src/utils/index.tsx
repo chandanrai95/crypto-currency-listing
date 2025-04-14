@@ -148,7 +148,8 @@ export const getTableColumns = ({ currency }: { currency: string }) => [{
               transition bg-gray-800 text-white text-sm 
               px-3 py-1 rounded pointer-events-none z-10 whitespace-nowrap">
           <span>Total : {formatedTotalS}</span> <br />
-          <span>Circulating : {formatedCirculatingS}</span>
+          <span>Circulating : {formatedCirculatingS}</span> <br />
+          <span>Percentage : {`${perc}%`}</span>
         </div>
       </div>)
   }
