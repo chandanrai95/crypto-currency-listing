@@ -1,13 +1,27 @@
-import React, { JSX, MouseEventHandler } from "react";
+import React, { JSX, MouseEventHandler, useMemo } from "react";
 
 interface ModalProps {
   isOpen: boolean,
   onClose?: MouseEventHandler<HTMLButtonElement>,
-  children: JSX.Element
+  children: JSX.Element,
+  leftHeader: Function
 }
 
-const Modal = ({ isOpen, onClose, children }: ModalProps) => {
+const Modal = ({ isOpen, onClose, children, leftHeader }: ModalProps) => {
   if (!isOpen) return null;
+
+  const leftH = useMemo(() => {
+    if (leftHeader) {
+      return leftHeader()
+    }
+    return (
+      <h1
+      className="font-bold text-xl"
+    >
+      Details
+    </h1>
+    )
+  },[])
 
   return (
     <div className="fixed inset-0 bg-black/20  flex items-center justify-center z-50">
@@ -15,14 +29,10 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
         <div
           className="flex justify-between"
         >
-          <h1
-            className="font-bold text-xl"
-          >
-            Details
-          </h1>
+         {leftH}
           <button
             onClick={onClose}
-            className=" top-3 right-6 text-gray-500 hover:text-black"
+            className=" top-3 right-6 text-gray-500 hover:text-black cursor-pointer"
           >
             ✕
           </button>

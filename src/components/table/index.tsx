@@ -6,9 +6,9 @@ const tdClasses = `border border-gray-200 p-2 text-black`
 
 interface columnsProps {
   header: string,
-  headerKey: string
-  formatter?: Function
-  customComponet?: Function
+  headerKey?: string | undefined,
+  formatter?: Function | undefined,
+  customComponet?: Function | undefined
 }
 
 interface TableProps {
@@ -48,17 +48,18 @@ const Table = ({
                   {
                     columns.map((col) => {
                       const {
+                        header,
                         headerKey,
                         formatter,
                         customComponet
                       } = col
-                      let val = d1[headerKey] || ''
+                      let val =headerKey ? d1[headerKey] || '' : d1 || ''
                       val = formatter ? formatter(val) : val;
                       if (customComponet) {
-                        return <td key={`row-item-${idx}-${headerKey}`} className={tdClasses}> {customComponet(val) }</td>
+                        return <td key={`row-item-${idx}-${headerKey || header}`} className={tdClasses}> {customComponet(val) }</td>
                       }
                       return (
-                        <td key={`row-item-${idx}-${headerKey}`} className={tdClasses}>{val}</td>
+                        <td key={`row-item-${idx}-${headerKey || header}`} className={tdClasses}>{val}</td>
                       )
                     })
                   }

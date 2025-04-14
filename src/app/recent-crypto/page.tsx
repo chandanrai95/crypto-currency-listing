@@ -1,6 +1,8 @@
 'use client';
+import { postCryptoViewed } from "@/api/viewed-crypto";
+import CryptoDetailModal from "@/components/crypt-detail-modal";
 import Table from "@/components/table";
-import { formatDate, formatPrice } from "@/utils";
+import { formatCurrency, formatDate, formatPrice, getTableColumns } from "@/utils";
 import React, { useEffect, useMemo, useState } from "react";
 
 interface Crypto {
@@ -14,6 +16,12 @@ interface RecentCrypto {
 const RecentCrypto = () => {
   const [cryptos, setCryptos] = useState<any>([]);
   const [loading, setLoading] = useState(true);
+
+  /* This is use for setting the selected crypto data */
+  const [modalData, setModalData] = useState<Record<string, any>>();
+
+  /* This is use for determining if modal is open or not */
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchRecentCrypto = async () => {
@@ -31,47 +39,25 @@ const RecentCrypto = () => {
     fetchRecentCrypto();
   }, []);
 
-  const onRowSelect = (e: React.MouseEvent<HTMLTableRowElement>) => {
+  const onModalOpenClick = (data: Record<string, any>) => {
+    setIsModalOpen(true);
+    setModalData(data)
+  }
+
+  // Handler for closing modal
+  const onModalClose = () => {
+    setIsModalOpen(false);
+    setModalData(undefined)
+  }
+
+  const onRowSelect = (e: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => {
+    postCryptoViewed(e)
+    onModalOpenClick(e)
 
   }
 
   const columns = useMemo(() => {
-    return [{
-      header: 'Logo',
-      headerKey: 'image',
-      customComponet: (val: string) => {
-        return (
-          <img
-            className="h-[32rem"
-            style={{
-              height: '60px',
-              width: '60px'
-            }}
-            src={val}
-
-          />
-        )
-      }
-    }, {
-      header: 'Name',
-      headerKey: 'name'
-    }, {
-      header: 'Market Cap Rank',
-      headerKey: 'market_cap_rank',
-
-    }, {
-      header: 'Market Cap',
-      headerKey: 'market_cap',
-      formatter: (val: number) => formatPrice(val, 'USD')
-    }, {
-      header: 'Price',
-      headerKey: 'current_price',
-      formatter: (val: number) => formatPrice(val, 'USD')
-    }, {
-      header: 'Last Updated',
-      headerKey: 'last_updated',
-      formatter: (val: string) => formatDate(val)
-    }]
+    return getTableColumns({ currency: 'USD' })
   }, []);
 
   const formatedData = useMemo(() => {
@@ -82,9 +68,7 @@ const RecentCrypto = () => {
   return (
     <div className="flex flex-1 h-full items-center p-10 flex-col">
       <h1 className="font-bold text-2xl text-white">Top 10 Recent Viewed Cryptocurrency</h1>
-      {/* <pre className="text-white mt-4 text-sm">
-        {JSON.stringify(cryptos, null, 2)}
-      </pre> */}
+
       <div
         className="flex mt-10 flex-1 flex-col bg-white w-full p-5 shadow-xl rounded-md h-full overflow-auto"
       >
@@ -109,6 +93,13 @@ const RecentCrypto = () => {
 
         </div>
       </div>
+
+      <CryptoDetailModal
+        isOpen={isModalOpen}
+        onClose={onModalClose}
+        data={modalData}
+        currency={'USD'}
+      />
     </div>
   );
 };
