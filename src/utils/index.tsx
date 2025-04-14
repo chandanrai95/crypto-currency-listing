@@ -78,17 +78,14 @@ export const getTableColumns = ({ currency }: { currency: string }) => [{
   header: 'Market Cap 24h%',
   headerKey: 'market_cap_change_percentage_24h',
   customComponet: (val: number) => {
-    let color = val > 0 ? '#13C783' : '#EA3943';
+    let isProfit = val > 0 ;
     let iconColor = val > 0 ? 'text-[#13C783]' : 'text-[#EA3943]';
-    let icon = val > 0 ? "m4.5 15.75 7.5-7.5 7.5 7.5" : "m19.5 8.25-7.5 7.5-7.5-7.5"
     let formattedVal = Math.abs(val).toFixed(2)
     return (
       <div
         className="flex flex-row items-center justify-center"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke={color} className="size-6">
-          <path strokeLinecap="round" strokeLinejoin="round" d={icon} />
-        </svg>
+        <span className={`${iconColor}`}>{`${isProfit ? '▲' : '▼'}`}</span>
         <span className={`${iconColor} ml-1`}>{`${formattedVal}%`}</span>
       </div>
     )
@@ -101,17 +98,14 @@ export const getTableColumns = ({ currency }: { currency: string }) => [{
   header: '24h%',
   headerKey: 'price_change_percentage_24h',
   customComponet: (val: number) => {
-    let color = val > 0 ? '#13C783' : '#EA3943';
+    let isProfit = val > 0 ;
     let iconColor = val > 0 ? 'text-[#13C783]' : 'text-[#EA3943]';
-    let icon = val > 0 ? "m4.5 15.75 7.5-7.5 7.5 7.5" : "m19.5 8.25-7.5 7.5-7.5-7.5"
     let formattedVal = Math.abs(val).toFixed(2)
     return (
       <div
         className="flex flex-row items-center justify-center"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke={color} className="size-6">
-          <path strokeLinecap="round" strokeLinejoin="round" d={icon} />
-        </svg>
+        <span className={`${iconColor}`}>{`${isProfit ? '▲' : '▼'}`}</span>
         <span className={`${iconColor} ml-1`}>{`${formattedVal}%`}</span>
       </div>
     )
