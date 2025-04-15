@@ -66,7 +66,7 @@ const RecentCrypto = () => {
   }, [cryptos])
 
   return (
-    <div className="flex flex-1 h-full items-center p-10 flex-col">
+    <div className="flex flex-1 h-full items-center p-10 flex-col overflow-hidden">
       <h1 className="font-bold text-2xl text-white">Top 10 Recent Viewed Cryptocurrency</h1>
 
       <div
