@@ -184,7 +184,7 @@ const CryptoDetailModal = ({
                 customComponent
               } = attr || {}
               let val = data && key ? data[key] || '' : data || '';
-              console.log(label, '---', val)
+              
               if (customComponent) {
                 return (
                   <div className={rowClassName} key={`${key || label}_${idx}`}>

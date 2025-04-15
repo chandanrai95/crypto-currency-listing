@@ -53,11 +53,11 @@ export const getTableColumns = ({ currency }: { currency: string }) => [{
   customComponet: (val: string) => {
     return (
       <img
-        className="h-[32rem"
-        style={{
-          height: '60px',
-          width: '60px'
-        }}
+        className="h-[60px] w-[60px] object-contain"
+        // style={{
+        //   height: '60px',
+        //   width: '60px'
+        // }}
         src={val}
 
       />

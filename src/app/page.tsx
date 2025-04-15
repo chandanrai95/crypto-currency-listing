@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Table from '@/components/table';
 import CryptoDetailModal from "@/components/crypt-detail-modal";
 import { formatCurrency, formatDate, formatPrice, getTableColumns } from '@/utils';
@@ -40,7 +40,10 @@ export default function Home() {
   const [filter, setFilter] = useState({
     attr: 'market_cap',
     order: 'desc'
-  })
+  });
+
+  /* This is ref for interval to call api again */
+  // const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   /*Fetches top 50 crypto currency list from coingecko api on basis of selected currency and set to state  */
   const fetchAndSetupCryptoData = async (currency: string = 'usd') => {
@@ -63,6 +66,15 @@ export default function Home() {
   // This calls everytime whenever currency changes 
   useEffect(() => {
     fetchAndSetupCryptoData(currency.toLowerCase())
+    // intervalRef.current = setInterval(() => {
+    //   fetchAndSetupCryptoData(currency.toLowerCase())
+    // }, 6000)
+
+    return () => {
+      // if (intervalRef.current) {
+      //   clearInterval(intervalRef.current)
+      // }
+    }
   }, [currency])
 
 
@@ -242,7 +254,7 @@ export default function Home() {
   // Renderer for home page
 
   return (
-    <div className="flex flex-1 h-full items-center p-10 flex-col">
+    <div className="flex flex-1 h-full items-center p-10 flex-col overflow-hidden">
       <h1
         className=" font-bold text-2xl text-white"
       >Top 50 Cryptocurreny Listing
@@ -251,12 +263,12 @@ export default function Home() {
         className="flex mt-10 flex-1 flex-col bg-white w-full p-5 shadow-xl rounded-md h-full overflow-auto"
       >
         <div
-          className="flex w-full gap-4"
+          className="flex flex-wrap w-full gap-4"
         >
           <div className="flex-1">
             <h3 className="font-medium">Search</h3>
             <input
-              className="flex border-1 border-gray-300 p-2 rounded-md w-full text-black mt-1"
+              className="flex border-1 border-gray-300 p-2 rounded-md w-full text-black mt-1 min-w-[100px]"
               type='text'
               value={search}
               placeholder=""
